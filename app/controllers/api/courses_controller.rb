@@ -26,7 +26,7 @@ module Api
       end
 
       def load_courses_with_tutors
-        @courses = Course.all
+        @courses = Course.includes(:tutors)
       end
   end
 end
