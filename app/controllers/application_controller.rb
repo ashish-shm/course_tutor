@@ -3,4 +3,5 @@
 class ApplicationController < ActionController::API
   include Authenticable
   include Authorisable
+  include ApiRescuable
 end

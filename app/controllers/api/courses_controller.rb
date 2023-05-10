@@ -26,7 +26,9 @@ module Api
       end
 
       def load_courses_with_tutors
-        @courses = Course.includes(:tutors)
+        page_no = params[:page_no] || 1
+        page_size = params[:page_size] || 10
+        @courses = Course.includes(:tutors).offset(page_size * (page_no - 1)).limit(page_size)
       end
   end
 end
