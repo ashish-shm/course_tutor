@@ -1,24 +1,8 @@
-# README
+# Course and Tutor Application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project includes the following API's
 
-Things you may want to cover:
+* Common POST API to create a course & its tutors
 
-* Ruby version
+* GET API to list all the courses along with their tutors
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
