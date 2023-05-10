@@ -23,6 +23,20 @@ X-Auth-Token: 'ByDy8KK9kjmkYmUz4khs'
 3. User has two roles in this application i.e standard & admin. An admin user is authorised to create courses with the tutors while standard user can list all the courses with the tutors.
 4. On running `bin/setup` an admin user is also created which can be used for courses creation. 
 
+## Creating a custom user
+You can create a custom user via rails console i.e `rails c` using the following attributes. By default, it'll create a `standard` user and we can create an admin user by specifying role as `admin`.
+```ruby
+user_attributes = {
+    first_name: "Test",
+    last_name: "User",
+    email: "test@example.com",
+    password: "welcome",
+    password_confirmation: "welcome",
+    role: "admin"
+  }
+User.create user_attributes
+```
+
 ## API's
 
 ### 1. Create course with its tutors `POST api/courses`
@@ -76,7 +90,7 @@ X-Auth-Token: 'ByDy8KK9kjmkYmUz4khs'
 
 
 ### 2. Get list of courses with its tutors `GET api/courses`
-#### For pagination add `page_size` & `page_no` params such as `GET api/courses?page_size=5&page_no=2`
+#### For pagination add `page_size` & `page_no` params such as `api/courses?page_size=5&page_no=2`
 #### `Response`
 ```json
 [
@@ -104,7 +118,7 @@ X-Auth-Token: 'ByDy8KK9kjmkYmUz4khs'
         "id": "06c1cff5-5c27-4aee-9746-4a449cde09cb",
         "title": "Learn Ruby on rails",
         "description": "This course helps you to learn ROR",
-        "category": "finance",
+        "category": "development",
         "tutors": [
             {
                 "id": "1fc539e2-a9d6-46a8-bcb8-3839b097926f",
@@ -122,5 +136,8 @@ X-Auth-Token: 'ByDy8KK9kjmkYmUz4khs'
     }
 ]
 ```
+
+
+
 
 Made with :heart: and ![Ruby](https://img.shields.io/badge/-Ruby-000000?style=flat&logo=ruby)
