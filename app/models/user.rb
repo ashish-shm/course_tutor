@@ -6,8 +6,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable
 
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+
   enum role: { "standard": 0, "admin": 1 }
-  validates :email, uniqueness: true
+
+  validates :email, presence: true, length: { maximum: 255 },
+    format: { with: VALID_EMAIL_REGEX },
+    uniqueness: { case_sensitive: false }
   validates :password_confirmation, presence: true, on: :create
   validates :first_name, :last_name, :email, presence: true
 

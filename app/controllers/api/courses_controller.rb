@@ -13,7 +13,7 @@ module Api
       if @course.save
         render
       else
-        render status: :unprocessable_entity, json: { message: @course.errors.full_messages }
+        render status: :unprocessable_entity, json: { errors: @course.errors.full_messages }
       end
     end
 
