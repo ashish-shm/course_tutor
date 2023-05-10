@@ -25,7 +25,7 @@ X-Auth-Token: 'ByDy8KK9kjmkYmUz4khs'
 
 ## API's
 
-### Create course with its tutors `POST api/courses`
+### 1. Create course with its tutors `POST api/courses`
 
 #### `Request Payload`
 ```json
@@ -33,7 +33,7 @@ X-Auth-Token: 'ByDy8KK9kjmkYmUz4khs'
     "course": {
         "title": "Learn personal finance",
         "description": "This course helps you to save money",
-        "category": "finance", // Categories can be finance, development or gaming.
+        "category": "finance",  (Categories can be finance, development or gaming.)
         "tutors_attributes": [{
             "first_name": "Test",
             "last_name": "One",
@@ -75,7 +75,7 @@ X-Auth-Token: 'ByDy8KK9kjmkYmUz4khs'
 
 
 
-### Get list of courses with its tutors `GET api/courses`
+### 2. Get list of courses with its tutors `GET api/courses`
 #### For pagination add `page_size` & `page_no` params such as `GET api/courses?page_size=5&page_no=2`
 #### `Response`
 ```json
@@ -122,3 +122,5 @@ X-Auth-Token: 'ByDy8KK9kjmkYmUz4khs'
     }
 ]
 ```
+
+Made with :heart: and ![Ruby](https://img.shields.io/badge/-Ruby-000000?style=flat&logo=ruby)
