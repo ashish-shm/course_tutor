@@ -45,6 +45,11 @@ group :development, :test do
   # Adds step-by-step debugging and stack navigation capabilities to pry using byebug.
   # supports both syntax - pry and byebug
   gem "pry-byebug"
+
+  gem "factory_bot_rails"
+  gem "faker"
+  gem "rspec-rails"
+
 end
 
 group :development do
