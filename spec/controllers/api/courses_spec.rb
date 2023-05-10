@@ -94,9 +94,11 @@ RSpec.describe Api::CoursesController, type: :request do
   end
 
   describe "get courses with its tutors" do
-    let!(:course) { create(:course) }
-    let!(:tutor_one) { create(:tutor, course:) }
-    let!(:tutor_two) { create(:tutor, course:) }
+    let!(:course_one) { create(:course) }
+    let!(:tutor_one) { create(:tutor, course: course_one) }
+    let!(:tutor_two) { create(:tutor, course: course_one) }
+    let!(:course_two) { create(:course) }
+    let!(:tutor_three) { create(:tutor, course: course_two) }
 
     context "with GET to 'api/courses'" do
 
@@ -110,8 +112,10 @@ RSpec.describe Api::CoursesController, type: :request do
         expect(response).to have_http_status(200)
         response_body = JSON.parse(response.body)
 
-        expect(response_body.count).to eq 1
+        expect(response_body.count).to eq 2
         expect(response_body.first["tutors"].count).to eq 2
+        expect(response_body.last["tutors"].count).to eq 1
+
       end
 
       it "returns correct response for course & its tutors" do
@@ -119,10 +123,31 @@ RSpec.describe Api::CoursesController, type: :request do
         expect(response).to have_http_status(200)
         response_body = JSON.parse(response.body)
 
-        expect(response_body.first["id"]).to eq course.id
+        expect(response_body.first["id"]).to eq course_one.id
         expect(response_body.first["tutors"].first["id"]).to eq tutor_one.id
-        expect(response_body.last["tutors"].last["id"]).to eq tutor_two.id
+        expect(response_body.first["tutors"].last["id"]).to eq tutor_two.id
+        expect(response_body.last["id"]).to eq course_two.id
+        expect(response_body.last["tutors"].first["id"]).to eq tutor_three.id
+      end
 
+      it "paginates the courses" do
+        get api_courses_path, params: { page_size: 1, page_no: 2 }, headers: headers(standard_user)
+        expect(response).to have_http_status(200)
+        response_body = JSON.parse(response.body)
+        expect(response_body.count).to eq 1
+        expect(response_body.first["id"]).to eq course_two.id
+
+        get api_courses_path, params: { page_size: 2, page_no: 1 }, headers: headers(standard_user)
+        expect(response).to have_http_status(200)
+        response_body = JSON.parse(response.body)
+        expect(response_body.count).to eq 2
+        expect(response_body.first["id"]).to eq course_one.id
+        expect(response_body.last["id"]).to eq course_two.id
+
+        get api_courses_path, params: { page_size: 2, page_no: 2 }, headers: headers(standard_user)
+        expect(response).to have_http_status(200)
+        response_body = JSON.parse(response.body)
+        expect(response_body.count).to eq 0
       end
     end
   end
