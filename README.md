@@ -1,18 +1,39 @@
 # Course and Tutor Application
 
-This project includes the following API's
-
+It's a rails application that allows users to create & list courses along with their tutors. This project includes two API's:
 * Common POST API to create a course & its tutors
+* GET API to list all the courses along with their tutors
 
-`POST api/courses`
+## Pre-requisites
+It uses `Ruby 3.2.1`, `Ruby on Rails 7.0.4.3` and `Postgresql` for the database.
 
-`Request Payload`
+## Getting started
+1. Clone the repository.
+2. Run `bin/setup` to install the dependencies, prepare the database & create an admin user for authorisation.
+3. Run `bundle exec rails server` to start the Rails server.
+4. Run `bundle exec rspec` to run the Rspec tests for the API's.
+ 
+## Authentication & Authorisation
+1. Each user has an authentication token attribute which gets created upon user creation.
+2. Add `X-Auth-Email` & `X-Auth-Token` in the request headers so that user making the API request can be authenticated. eg:
+```json
+X-Auth-Email: 'admin@example.com'
+X-Auth-Token: 'ByDy8KK9kjmkYmUz4khs'
+```
+3. User has two roles in this application i.e standard & admin. An admin user is authorised to create courses with the tutors while standard user can list all the courses with the tutors.
+4. On running `bin/setup` an admin user is also created which can be used for courses creation. 
+
+## API's
+
+### Create course with its tutors `POST api/courses`
+
+#### `Request Payload`
 ```json
 {
     "course": {
         "title": "Learn personal finance",
         "description": "This course helps you to save money",
-        "category": "finance",
+        "category": "finance", // Categories can be finance, development or gaming.
         "tutors_attributes": [{
             "first_name": "Test",
             "last_name": "One",
@@ -27,7 +48,7 @@ This project includes the following API's
 }
 ```
 
-`Response`
+#### `Response`
 ```json
 {
     "notice": "Course & its tutors are added successfully",
@@ -53,11 +74,10 @@ This project includes the following API's
 ```
 
 
-* GET API to list all the courses along with their tutors
 
-`GET api/courses`
-
-`Response`
+### Get list of courses with its tutors `GET api/courses`
+#### For pagination add `page_size` & `page_no` params such as `GET api/courses?page_size=5&page_no=2`
+#### `Response`
 ```json
 [
     {
